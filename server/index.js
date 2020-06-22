@@ -2,6 +2,7 @@ require('dotenv').config()
 const massive = require('massive'),
   express = require('express'),
   app = express(),
+  ctrl = require('./controllers'),
   session = require('express-session'),
   { CONNECTION_STRING, SESSION_SECRET, SERVER_PORT } = process.env
 
@@ -26,6 +27,9 @@ massive({
 }).catch(error => {
   console.log(error)
 })
+
+app.get('/api/people', ctrl.retrieveAll)
+app.get('api/person', ctrl.retrievePerson)
 
 
 app.listen(SERVER_PORT, () => { console.log(`Prancing and Dancing on port ${SERVER_PORT}`) })

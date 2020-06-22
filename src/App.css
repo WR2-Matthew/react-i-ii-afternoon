@@ -7,7 +7,7 @@
   height: 10vh;
   width: 100vw;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   background-color: rgb(63, 114, 235);
 }
