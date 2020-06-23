@@ -10,6 +10,7 @@ function App() {
         <h2 className='homeHeader' >Home</h2>
       </div>
       <Dashboard />
+
     </div>
   );
 }

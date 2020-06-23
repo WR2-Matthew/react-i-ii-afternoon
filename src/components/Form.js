@@ -1,26 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getPerson } from '../redux/actionCreators'
-import axios from 'axios'
 
 class Form extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-
-    }
+  constructor(props) {
+    super(props);
   }
-
-  // componentDidMount = () => {
-  //   const { people, count } = this.props
-  //   console.log(people)
-  //   axios
-  //     .get(`api/person/${people[count - 1].user_id}`)
-  //     .then(res => {
-  //       this.props.getPerson(res.data)
-  //     })
-  // }
 
   render() {
     const { single, count, people } = this.props
@@ -35,7 +20,37 @@ class Form extends Component {
           </div>
 
           <div className='count'>
-            <h1>{}</h1>
+            <h1>{`${count} / ${people.length}`}</h1>
+          </div>
+
+        </div>
+
+        <div className='userInfo' >
+
+          <div className='location'>
+
+            <div className='region'>
+              <h3>From:</h3>
+              <p>{`${single.city}, ${single.country}`}</p>
+            </div>
+
+            <div className='title' >
+              <h3>Job Title:</h3>
+              <p>{`${single.job_title}`}</p>
+            </div>
+
+            <div className='employer' >
+              <h3>Employer:</h3>
+              <p>{`${single.employer}`}</p>
+            </div>
+
+            <div className='movies'>
+              <h3>Favorite Movies:</h3>
+              <p>{single.favorite_movie_one}</p>
+              <p>{single.favorite_movie_two}</p>
+              <p>{single.favorite_movie_three}</p>
+            </div>
+
           </div>
 
         </div>
@@ -48,7 +63,20 @@ class Form extends Component {
 function mapStateToProps(state) {
   return {
     people: state.people,
+    count: state.count
   }
 }
 
 export default connect(mapStateToProps, { getPerson })(Form)
+
+
+
+// componentDidMount = () => {
+  //   const { people, count } = this.props
+  //   console.log(people)
+  //   axios
+  //     .get(`api/person/${people[count - 1].user_id}`)
+  //     .then(res => {
+  //       this.props.getPerson(res.data)
+  //     })
+  // }

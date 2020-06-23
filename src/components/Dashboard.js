@@ -5,12 +5,8 @@ import { getPeople } from '../redux/actionCreators'
 import Form from './Form'
 
 class Dashboard extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      count: 1,
-    }
+  constructor(props) {
+    super(props);
   }
 
   componentDidMount = () => {
@@ -22,14 +18,19 @@ class Dashboard extends Component {
   }
 
   getSinglePerson = () => {
-    const { people } = this.props
-    const { count } = this.state
+    const { people, count } = this.props
     return people[count - 1]
+  }
+
+  previous = () => {
+    const { count, people } = this.props
+    if (people.length === 1) {
+      this
+    }
   }
 
   render() {
     const { people } = this.props
-    const { count } = this.state
     return (
 
       <div className='dash'>
@@ -38,12 +39,12 @@ class Dashboard extends Component {
           {people.length === 0 ? <div></div> :
             <Form
               single={this.getSinglePerson()}
-              count
             />}
         </div>
 
         <div className='functionality'>
-
+          <button onClick={() => this.previous}>{`< Previous`}</button>
+          <button>{`Next >`}</button>
         </div>
 
       </div>
@@ -51,9 +52,12 @@ class Dashboard extends Component {
   }
 }
 
+
+
 function mapStateToProps(state) {
   return {
-    people: state.people
+    people: state.people,
+    count: state.count
   }
 }
 
