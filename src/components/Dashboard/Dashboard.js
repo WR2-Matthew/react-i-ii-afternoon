@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { getPeople } from '../redux/actionCreators'
-import Form from './Form'
+import { getPeople } from '../../redux/actionCreators'
+import Form from '../Form/Form'
+import './Dashboard.css'
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      count: 1
+    }
   }
 
   componentDidMount = () => {
@@ -18,33 +23,58 @@ class Dashboard extends Component {
   }
 
   getSinglePerson = () => {
-    const { people, count } = this.props
+    const { people } = this.props
+    const { count } = this.state
     return people[count - 1]
   }
 
   previous = () => {
-    const { count, people } = this.props
-    if (people.length === 1) {
-      this
+    const { people } = this.props
+    const { count } = this.state
+    if (count === 1) {
+      this.setState({
+        count: people.length
+      })
+    }
+    else {
+      this.setState({
+        count: count - 1
+      })
+    }
+  }
+
+  next = () => {
+    const { people } = this.props
+    const { count } = this.state
+    if (count === people.length) {
+      this.setState({
+        count: 1
+      })
+    } else {
+      this.setState({
+        count: count + 1
+      })
     }
   }
 
   render() {
     const { people } = this.props
+    const { count } = this.state
     return (
 
       <div className='dash'>
 
-        <div>
+        <div className='dashForm'>
           {people.length === 0 ? <div></div> :
             <Form
               single={this.getSinglePerson()}
+              currentCount={count}
             />}
         </div>
 
         <div className='functionality'>
-          <button onClick={() => this.previous}>{`< Previous`}</button>
-          <button>{`Next >`}</button>
+          <button className='buttons' onClick={this.previous}>{`< Previous`}</button>
+          <button className='buttons' onClick={this.next}>{`Next >`}</button>
         </div>
 
       </div>
@@ -56,8 +86,8 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
   return {
-    people: state.people,
-    count: state.count
+    people: state.people
+    // count: state.count
   }
 }
 

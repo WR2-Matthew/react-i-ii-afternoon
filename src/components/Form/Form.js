@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getPerson } from '../redux/actionCreators'
+import { getPerson } from '../../redux/actionCreators'
+import './Form.css'
 
 class Form extends Component {
   constructor(props) {
@@ -8,7 +9,8 @@ class Form extends Component {
   }
 
   render() {
-    const { single, count, people } = this.props
+    const { single, currentCount, people } = this.props
+    console.log(currentCount, 'single')
     return (
 
       <div className='form' >
@@ -16,11 +18,11 @@ class Form extends Component {
         <div className='formHeader'>
 
           <div className='names'>
-            <h1>{`${single.first_name} ${single.last_name}`}</h1>
+            <h1 className='name'>{`${single.first_name} ${single.last_name}`}</h1>
           </div>
 
           <div className='count'>
-            <h1>{`${count} / ${people.length}`}</h1>
+            <h1>{`${currentCount} / ${people.length}`}</h1>
           </div>
 
         </div>
@@ -44,14 +46,15 @@ class Form extends Component {
               <p>{`${single.employer}`}</p>
             </div>
 
-            <div className='movies'>
-              <h3>Favorite Movies:</h3>
-              <p>{single.favorite_movie_one}</p>
-              <p>{single.favorite_movie_two}</p>
-              <p>{single.favorite_movie_three}</p>
-            </div>
-
           </div>
+
+          <div className='movies'>
+            <h3>Favorite Movies:</h3>
+            <p>{`1. ${single.favorite_movie_one}`}</p>
+            <p>{`2. ${single.favorite_movie_two}`}</p>
+            <p>{`3. ${single.favorite_movie_three}`}</p>
+          </div>
+
 
         </div>
 
