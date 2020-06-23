@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { getPeople } from '../../redux/actionCreators'
 import Form from '../Form/Form'
 import './Dashboard.css'
+import Crud from '../Crud/Crud'
 
 class Dashboard extends Component {
   constructor(props) {
@@ -66,10 +67,16 @@ class Dashboard extends Component {
 
         <div className='dashForm'>
           {people.length === 0 ? <div></div> :
-            <Form
-              single={this.getSinglePerson()}
-              currentCount={count}
-            />}
+            <div>
+              <Form
+                single={this.getSinglePerson()}
+                currentCount={count}
+              />
+              <Crud
+                single={this.getSinglePerson()}
+              />
+            </div>
+          }
         </div>
 
         <div className='functionality'>

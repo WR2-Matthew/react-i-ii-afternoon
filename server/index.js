@@ -30,6 +30,7 @@ massive({
 
 app.get('/api/people', ctrl.retrieveAll)
 app.get('api/person', ctrl.retrievePerson)
+app.delete('/api/person/user_id', ctrl.deletePerson)
 
 
 app.listen(SERVER_PORT, () => { console.log(`Prancing and Dancing on port ${SERVER_PORT}`) })

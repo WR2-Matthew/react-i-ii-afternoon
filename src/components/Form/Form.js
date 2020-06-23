@@ -10,7 +10,6 @@ class Form extends Component {
 
   render() {
     const { single, currentCount, people } = this.props
-    console.log(currentCount, 'single')
     return (
 
       <div className='form' >

@@ -11,7 +11,7 @@ module.exports = {
     const { user_id } = req.query
     const db = req.app.get('db')
 
-    const user = await db.retrievePerson(user_id)
+    const user = await db.(user_id)
 
     const person = user[0]
 
@@ -22,7 +22,14 @@ module.exports = {
     else {
       return res.status(200).send(person)
     }
+  },
+
+  deletePerson: async (req, res) => {
+    const { user_id } = req.params
+    const db = req.app.get('db')
+
+    const updatedUsers = await db.remove_person(user_id)
+
+    return res.status(200).send(updatedUsers)
   }
-
-
 }
