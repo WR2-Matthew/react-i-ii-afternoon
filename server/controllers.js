@@ -11,7 +11,7 @@ module.exports = {
     const { user_id } = req.query
     const db = req.app.get('db')
 
-    const user = await db.(user_id)
+    const user = await db.get_person(user_id)
 
     const person = user[0]
 
@@ -25,10 +25,12 @@ module.exports = {
   },
 
   deletePerson: async (req, res) => {
-    const { user_id } = req.params
+    console.log('hitttttt')
+    const { id } = req.query
+    console.log(id, 'userid')
     const db = req.app.get('db')
 
-    const updatedUsers = await db.remove_person(user_id)
+    const updatedUsers = await db.remove_person(id)
 
     return res.status(200).send(updatedUsers)
   }

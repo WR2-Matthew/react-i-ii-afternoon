@@ -11,7 +11,8 @@ class Dashboard extends Component {
     super(props);
 
     this.state = {
-      count: 1
+      count: 1,
+      toggleEdit: false
     }
   }
 
@@ -23,9 +24,21 @@ class Dashboard extends Component {
       })
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    const { people } = this.props
+    if (prevProps.people && prevProps.people.length !== people.length) {
+      axios
+        .get('/api/people')
+        .then(res => {
+          this.props.getPeople(res.data)
+        })
+    }
+  }
+
   getSinglePerson = () => {
     const { people } = this.props
     const { count } = this.state
+    console.log(people, 'hit')
     return people[count - 1]
   }
 
@@ -58,29 +71,44 @@ class Dashboard extends Component {
     }
   }
 
+  resetCount = () => {
+    this.setState({
+      count: 1
+    })
+  }
+
+  toggleChange = (data) => {
+    this.setState({
+      toggleEdit: data
+    })
+  }
+
   render() {
     const { people } = this.props
-    const { count } = this.state
+    const { count, toggleEdit } = this.state
     return (
 
       <div className='dash'>
 
         <div className='dashForm'>
-          {people.length === 0 ? <div></div> :
-            <div>
-              <Form
-                single={this.getSinglePerson()}
-                currentCount={count}
-              />
-              <Crud
-                single={this.getSinglePerson()}
-              />
-            </div>
+          {!people || people.length === 0 && !toggleEdit ? <div></div> :
+
+            <Form
+              single={this.getSinglePerson()}
+              currentCount={count}
+            />
           }
         </div>
 
         <div className='functionality'>
           <button className='buttons' onClick={this.previous}>{`< Previous`}</button>
+          {!people || people.length === 0 ? <div></div> :
+            <Crud
+              single={this.getSinglePerson()}
+              reset={this.resetCount}
+              toggleEdit={this.toggleChange}
+            />
+          }
           <button className='buttons' onClick={this.next}>{`Next >`}</button>
         </div>
 
